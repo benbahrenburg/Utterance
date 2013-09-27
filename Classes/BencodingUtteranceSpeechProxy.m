@@ -41,6 +41,9 @@ int const cSpeechBoundaryWord = 1;
 	[super _destroy];
 }
 
+/**
+ * Language detection taken from Eric Wolfe's contribution to Hark https://github.com/kgn/Hark
+ */
 - (NSString *)voiceLanguageForText:(NSString *)text
 {
     CFRange range = CFRangeMake(0, MIN(400, text.length));
