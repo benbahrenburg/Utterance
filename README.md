@@ -76,6 +76,18 @@ This places a delay at the beginning of the utterance.
 
 This places a delay at the end of the utterance.
 
+<b>Example</b>
+<pre><code>
+	if(speech.isSpeaking){
+		Ti.API.info("already speaking");
+	}
+	
+	speech.startSpeaking({
+		text:"こんにちは"
+	});	
+</code></pre>
+
+
 <h3>continueSpeaking</h3>
 
 This method continues reading any speech that has been paused.
@@ -83,6 +95,15 @@ This method continues reading any speech that has been paused.
 <b>Parameters</b>
 
 <b>None</b> 
+
+<b>Example</b>
+<pre><code>
+	if(speech.isSpeaking){
+		Ti.API.info("Already speaking, nothing to continue");
+		return;
+	}	
+	speech.continueSpeaking();	
+</code></pre>
 
 <h3>pauseSpeaking</h3>
 
