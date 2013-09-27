@@ -68,7 +68,7 @@ int const cSpeechBoundaryWord = 1;
         NSString *languageCode = [[language componentsSeparatedByString:@"-"] firstObject];
         for(NSString *language in availableLanguages){
             if([language hasPrefix:languageCode]){
-                NSLog(@"[ERROR] Falling back on: %@", language);
+                NSLog(@"[DEBUG] using default: %@", language);
                 return language;
             }
         }
