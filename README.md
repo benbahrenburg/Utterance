@@ -264,6 +264,9 @@ speech.addEventListener('continued',function(d){
 <h3>Examples</h3>
 Please check the module's example folder or [here](https://github.com/benbahrenburg/Utterance/tree/master/example) for samples on how to use this project.
 
+<h3>Credits</h3>
+The language detection snippet is from [Eric Wolfe's](https://github.com/ericrwolfe) contribution to [Hark](https://github.com/kgn/Hark)
+
 <h3>Twitter</h3>
 
 Please consider following the [@benCoding Twitter](http://www.twitter.com/benCoding) for updates 
