@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 0.1
+apiversion: 2
+description: Titanium module for Apple's native Speech Synthesizer
+author: Benjamin Bahrenburg
+license: Apache 2.0
+copyright: Copyright (c) 2013 by Benjamin Bahrenburg(bencoding)
+
+
+# these should not be edited
+name: utterance
+moduleid: bencoding.utterance
+guid: 3ffcde48-e965-4c88-8dc6-2c7150da60fb
+platform: iphone
+minsdk: 3.1.3.GA
