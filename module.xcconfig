@@ -10,7 +10,7 @@
 //
 // How to add a Framework (example)
 //
-// OTHER_LDFLAGS=$(inherited) -framework Foo
+// OTHER_LDFLAGS=$(inherited) -framework AVFoundation
 //
 // Adding a framework for a specific version(s) of iPhone:
 //
@@ -25,3 +25,4 @@
 //
 // IMPORTANT NOTE: always use $(inherited) in your overrides
 // 
+OTHER_LDFLAGS=$(inherited) -framework AVFoundation
