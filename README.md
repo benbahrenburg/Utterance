@@ -1,4 +1,4 @@
-<h1>Utterance</h1>
+# Utterance    [![Titanium](http://www-static.appcelerator.com/badges/titanium-git-badge-sq.png)](http://www.appcelerator.com/titanium/)
 
 Utterance lets you use Text to Speech in your Titanium projects.  This uses iOS7's Speech Synthesizer when on iOS and android.speech.tts.TextToSpeech on Android.
 
@@ -13,6 +13,7 @@ Download the platform you wish to use:
 
 * [iOS Dist](https://github.com/benbahrenburg/Utterance/tree/master/ios/dist)
 * [Android Dist](https://github.com/benbahrenburg/Utterance/tree/master/android/dist)
+* Install from gitTio    [![gitTio](http://gitt.io/badge.png)](http://gitt.io/component/bencoding.utterance)
 
 <h2>Building from source?</h2>
 
