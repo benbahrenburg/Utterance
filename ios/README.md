@@ -1,18 +1,18 @@
 <h1>Utterance</h1>
 
-Utterance lets you use iOS7's Speech Synthesizer in your Titanium project.
+Utterance lets you use Text to Speech in your Titanium projects.  This uses iOS7's Speech Synthesizer when on iOS and android.speech.tts.TextToSpeech on Android.
 
 <h2>Before you start</h2>
-* This is an iOS module only
-* You need Titanium SDK 3.1.3.GA or greater
-* You need iOS 7 or greater
+* You need Titanium SDK 3.2.1.GA or greater
+* If using iOS, you need iOS 7 or greater
 * Before using this module you first need to install the package. If you need instructions on how to install a 3rd party module please read this installation guide.
 
 <h2>Download the compiled release</h2>
 
 Download the platform you wish to use:
 
-* [iOS Dist](https://github.com/benbahrenburg/Utterance/tree/master/dist)
+* [iOS Dist](https://github.com/benbahrenburg/Utterance/tree/master/ios/dist)
+* [Android Dist](https://github.com/benbahrenburg/Utterance/tree/master/android/dist)
 
 <h2>Building from source?</h2>
 
@@ -22,6 +22,11 @@ Import the project into Xcode:
 
 * Modify the titanium.xcconfig file with the path to your Titanium installation
 
+
+Import the project into Eclipse:
+
+* Update the .classpath
+* Update the build properties
 
 <h2>Setup</h2>
 
@@ -35,7 +40,7 @@ var utterance = require('bencoding.utterance');
 </code></pre>
 
 <h2>Working with the Speech Proxy</h2>
-The Speech proxy provides access to the native iOS Speech Synthesizer.  A new instance of this is created when you call createSpeech.
+The Speech proxy provides access to the platform's native Text To Speech Engine.  A new instance of this is created when you call createSpeech.
 
 <b>Example</b>
 <pre><code>
@@ -58,23 +63,27 @@ The text to be spoken
 
 <b>voice</b> : String :<b>Optional</b>
 
-The voice to be used in speaking.  If this parameter is not defined, the proper language will be inferred.
+The voice to be used in speaking.  If this parameter is not defined, the proper language will be inferred on iOS.  On Android, the default language of the device will be used.
 
 <b>rate</b> : float :<b>Optional</b>
 
 The speed which the text will be read. This is a value between 0 and 1.  You can use the DEFAULT_SPEECH_RATE, MIN_SPEECH_RATE, and MAX_SPEECH_RATE properties as well.
 
-<b>volume</b> : float :<b>Optional</b>
+<b>volume</b> : float :<b>Optional - iOS only</b>
 
 The volume of the reader.  This is a value between 0 and 1.  By default a value of 1 will be used.
 
-<b>preUtteranceDelay</b> : float :<b>Optional</b>
+<b>preUtteranceDelay</b> : float :<b>Optional - iOS only</b>
 
 This places a delay at the beginning of the utterance.
 
-<b>postUtteranceDelay</b> : float :<b>Optional</b>
+<b>postUtteranceDelay</b> : float :<b>Optional - iOS only</b>
 
 This places a delay at the end of the utterance.
+
+<b>pitch</b> : float :<b>Optional - Android only</b>
+
+This method sets the speech pitch for the TextToSpeech engine.
 
 <b>Example</b>
 <pre><code>
@@ -262,7 +271,10 @@ speech.addEventListener('continued',function(d){
 <h2>Learn More</h2>
 
 <h3>Examples</h3>
-Please check the module's example folder or [here](https://github.com/benbahrenburg/Utterance/tree/master/example) for samples on how to use this project.
+Please check the module's example folder :
+
+* [iOS](https://github.com/benbahrenburg/Utterance/tree/master/ios/example)
+* [Android](https://github.com/benbahrenburg/Utterance/tree/master/android/example)
 
 <h3>Credits</h3>
 The language detection snippet is from [Eric Wolfe's](https://github.com/ericrwolfe) contribution to [Hark](https://github.com/kgn/Hark)
@@ -274,12 +286,12 @@ and more about Titanium.
 
 <h3>Blog</h3>
 
-For module updates, Titanium tutorials and more please check out my blog at [benCoding.Com](http://benCoding.com).
+For module updates, Titanium tutorials and more please check out my blog at [bencoding.com](http://bencoding.com).
 
 <h2>License</h2>
 Utterance is available under the Apache 2.0 license.
 
-Copyright 2013 Benjamin Bahrenburg
+Copyright 2014 Benjamin Bahrenburg
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
