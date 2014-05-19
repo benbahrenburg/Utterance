@@ -4,10 +4,10 @@
 #
 version: 0.1
 apiversion: 2
-description: My module
-author: Your Name
-license: Specify your license
-copyright: Copyright (c) 2014 by Your Company
+description: Android Text to Speech for Titanium Mobile
+author: Benjamin Bahrenburg
+license: Apache 2.0
+copyright: Copyright (c) 2014 by Benjamin Bahrenburg(bencoding)
 
 
 # these should not be edited

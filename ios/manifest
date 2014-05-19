@@ -7,7 +7,7 @@ apiversion: 2
 description: Titanium module for Apple's native Speech Synthesizer
 author: Benjamin Bahrenburg
 license: Apache 2.0
-copyright: Copyright (c) 2013 by Benjamin Bahrenburg(bencoding)
+copyright: Copyright (c) 2014 by Benjamin Bahrenburg(bencoding)
 
 
 # these should not be edited

@@ -24,6 +24,13 @@ public class SpeechProxy extends KrollProxy implements TiLifecycle.OnLifecycleEv
 	private TextToSpeech _tts  = null;
 	private String _text = "";
 	private String _voice = "";
+
+	//Add properties for iOS compatability
+	@Kroll.constant public static final int DEFAULT_SPEECH_RATE = 0;
+	@Kroll.constant public static final int MIN_SPEECH_RATE = 0;
+	@Kroll.constant public static final int MAX_SPEECH_RATE = 0;
+	@Kroll.constant public static final int SPEECH_BOUNDARY_IMMEDIATE = 0;
+	@Kroll.constant public static final int SPEECH_BOUNDARY_WORD = 0;
 	
 	public SpeechProxy(){		
 		super();
@@ -224,5 +231,5 @@ public class SpeechProxy extends KrollProxy implements TiLifecycle.OnLifecycleEv
 	@Override
 	public void propertyChanged(String arg0, Object arg1, Object arg2,
 			KrollProxy arg3) {}
-
+	
 }
