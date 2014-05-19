@@ -222,6 +222,7 @@ int const cSpeechBoundaryWord = 1;
             [self.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
         }
     }
+    [self doCallListener:@"stopped"];
     _isSpeaking = NO;
     [self forgetSelf];
 }
