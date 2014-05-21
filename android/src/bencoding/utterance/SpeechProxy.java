@@ -1,3 +1,10 @@
+/**
+ * Utterance Speech to Text and Text to Speech
+ * Copyright (c) 2010-2014 by Benjamin Bahrenburg. All Rights Reserved.
+ * Licensed under the terms of the Apache Public License
+ * Please see the LICENSE included with this distribution for details.
+ *
+ */
 package bencoding.utterance;
 
 import java.util.HashMap;

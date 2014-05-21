@@ -2,9 +2,9 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 0.1
+version: 0.2
 apiversion: 2
-description: Android Text to Speech for Titanium Mobile
+description: Android Text to Speech and Speech to Text for Titanium Mobile
 author: Benjamin Bahrenburg
 license: Apache 2.0
 copyright: Copyright (c) 2014 by Benjamin Bahrenburg(bencoding)
