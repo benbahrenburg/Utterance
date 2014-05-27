@@ -34,6 +34,8 @@ public class SpeechToTextProxy extends KrollProxy implements TiActivityResultHan
 	private static final String MAX_RESULTS = "maxResults";
 	private static final String LANGUAGE_MODEL = "languageModel";
 	private static final String EVENT_COMPLETED = "completed";
+	private static final String EVENT_STARTED = "started";
+	private static final int INTENT_ID = 30987;
 	
 	@Kroll.constant public static final String LANGUAGE_MODEL_FREE_FORM = RecognizerIntent.LANGUAGE_MODEL_FREE_FORM;
 	@Kroll.constant public static final String LANGUAGE_MODEL_WEB_SEARCH = RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH;
@@ -78,7 +80,16 @@ public class SpeechToTextProxy extends KrollProxy implements TiActivityResultHan
 
 		final Activity activity = TiApplication.getAppCurrentActivity();
 		final TiActivitySupport activitySupport = (TiActivitySupport) activity;
-		activitySupport.launchActivityForResult(listenIntent, 111, this);
+		activitySupport.launchActivityForResult(listenIntent, INTENT_ID, this);
+		
+		if (hasListeners(EVENT_STARTED)) {
+			HashMap<String, Object> event = new HashMap<String, Object>();
+			event.put("success",true);
+			fireEvent(EVENT_STARTED, event);
+			Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_STARTED+ " fired");
+		}else{
+			Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_STARTED+ " not found");
+		}  
 
 	}
 
