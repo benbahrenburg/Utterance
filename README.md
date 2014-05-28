@@ -2,6 +2,9 @@
 
 Utterance lets you use your device's native Text to Speech and Speech to Text capabilities in your Titanium projects.
 
+See the Android example video [here](http://youtu.be/Nlrp7L2eeJs)
+
+
 <h2>Before you start</h2>
 * You need Titanium SDK 3.2.1.GA or greater
 * If using iOS, you need iOS 7 or greater

@@ -61,36 +61,40 @@ public class SpeechToTextProxy extends KrollProxy implements TiActivityResultHan
 	public void startSpeechToText(HashMap hm) {
 		KrollDict args = new KrollDict(hm);
 		
-		//start the speech recognition intent passing required data
-		Intent listenIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-		
-		//indicate package
-		listenIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getClass().getPackage().getName());
-		
-		if(args.containsKeyAndNotNull(PROPERTY_PROMPT)){
-			//message to display while listening
-			listenIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, args.getString(PROPERTY_PROMPT));			
+		try{
+			//start the speech recognition intent passing required data
+			Intent listenIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+			
+			//indicate package
+			listenIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getClass().getPackage().getName());
+			
+			if(args.containsKeyAndNotNull(PROPERTY_PROMPT)){
+				//message to display while listening
+				listenIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, args.getString(PROPERTY_PROMPT));			
+			}
+
+			//set speech model
+			listenIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, args.optString(LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM));
+			
+			//specify number of results to retrieve
+			listenIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, args.optInt(MAX_RESULTS, 10));
+
+			final Activity activity = TiApplication.getAppCurrentActivity();
+			final TiActivitySupport activitySupport = (TiActivitySupport) activity;
+			activitySupport.launchActivityForResult(listenIntent, INTENT_ID, this);
+			
+			if (hasListeners(EVENT_STARTED)) {
+				HashMap<String, Object> event = new HashMap<String, Object>();
+				event.put("success",true);
+				fireEvent(EVENT_STARTED, event);
+				Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_STARTED+ " fired");
+			}else{
+				Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_STARTED+ " not found");
+			}  			
+		}catch(Exception error){
+			Log.e(UtteranceModule.MODULE_FULL_NAME, error.getMessage());
+			error.printStackTrace();
 		}
-
-		//set speech model
-		listenIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, args.optString(LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM));
-		
-		//specify number of results to retrieve
-		listenIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, args.optInt(MAX_RESULTS, 10));
-
-		final Activity activity = TiApplication.getAppCurrentActivity();
-		final TiActivitySupport activitySupport = (TiActivitySupport) activity;
-		activitySupport.launchActivityForResult(listenIntent, INTENT_ID, this);
-		
-		if (hasListeners(EVENT_STARTED)) {
-			HashMap<String, Object> event = new HashMap<String, Object>();
-			event.put("success",true);
-			fireEvent(EVENT_STARTED, event);
-			Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_STARTED+ " fired");
-		}else{
-			Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_STARTED+ " not found");
-		}  
-
 	}
 
 	@Override
@@ -110,25 +114,30 @@ public class SpeechToTextProxy extends KrollProxy implements TiActivityResultHan
 	@Override
 	public void onResult(Activity activity, int requestCode, int resultCode, Intent data){
 
-		//store the returned word list as an ArrayList
-		ArrayList<String> suggestedWords = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-		int wordCount = suggestedWords.size();
-        Object[] results = new Object[wordCount];
-        if (suggestedWords != null && wordCount > 0) {            	  
-          	  for (int iLoop = 0; iLoop < wordCount; iLoop++) {
-          		results[iLoop]=suggestedWords.get(iLoop);
-          		}
-        }
-		if (hasListeners(EVENT_COMPLETED)) {
-			HashMap<String, Object> event = new HashMap<String, Object>();
-			event.put("success",true);
-			event.put("wordCount",wordCount);
-			event.put("words",results);
-			fireEvent(EVENT_COMPLETED, event);
-			Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_COMPLETED+ " fired");
-		}else{
-			Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_COMPLETED+ " not found");
-		}  
+		try{
+			//store the returned word list as an ArrayList
+			ArrayList<String> suggestedWords = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+			int wordCount = suggestedWords.size();
+	        Object[] results = new Object[wordCount];
+	        if (suggestedWords != null && wordCount > 0) {            	  
+	          	  for (int iLoop = 0; iLoop < wordCount; iLoop++) {
+	          		results[iLoop]=suggestedWords.get(iLoop);
+	          		}
+	        }
+			if (hasListeners(EVENT_COMPLETED)) {
+				HashMap<String, Object> event = new HashMap<String, Object>();
+				event.put("success",true);
+				event.put("wordCount",wordCount);
+				event.put("words",results);
+				fireEvent(EVENT_COMPLETED, event);
+				Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_COMPLETED+ " fired");
+			}else{
+				Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_COMPLETED+ " not found");
+			}  			
+		}catch(Exception error){
+			Log.e(UtteranceModule.MODULE_FULL_NAME, error.getMessage());
+			error.printStackTrace();
+		}
 	}
 
 	@Override
