@@ -61,7 +61,7 @@ Supported Platforms :  Android
 
 The SpeechToText proxy provides Speech to Text capabilities using the device's native platform speech recognizer.
 
-To learn more about Text to Speech please read the documentation:
+To learn more about Speech to Text please read the documentation:
 
 * [Android](https://github.com/benbahrenburg/Utterance/tree/master/android/documentation/stt.md)
 
