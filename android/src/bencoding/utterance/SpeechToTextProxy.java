@@ -103,6 +103,7 @@ public class SpeechToTextProxy extends KrollProxy implements TiActivityResultHan
 		if (hasListeners(EVENT_COMPLETED)) {
 			HashMap<String, Object> event = new HashMap<String, Object>();
 			event.put("success",false);
+			event.put("requestCode",requestCode);
 			event.put("message",error.getMessage());
 			fireEvent(EVENT_COMPLETED, event);
 			Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_COMPLETED+ " fired");
@@ -111,10 +112,45 @@ public class SpeechToTextProxy extends KrollProxy implements TiActivityResultHan
 		}  		
 	}
 
+	private void fireNoDataRecognized(int requestCode){
+		if (hasListeners(EVENT_COMPLETED)) {
+			HashMap<String, Object> event = new HashMap<String, Object>();
+			event.put("success",true);
+			event.put("detectedInput",false);
+			event.put("requestCode",requestCode);
+			event.put("wordCount",0);
+			event.put("words",null);
+			fireEvent(EVENT_COMPLETED, event);
+			Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_COMPLETED+ " fired");
+		}else{
+			Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_COMPLETED+ " not found");
+		}  		
+	}
+	private void fireRecognizerError(int requestCode, String errorMessage){
+		if (hasListeners(EVENT_COMPLETED)) {
+			HashMap<String, Object> event = new HashMap<String, Object>();
+			event.put("success",false);
+			event.put("message",errorMessage);
+			event.put("requestCode",requestCode);
+			fireEvent(EVENT_COMPLETED, event);
+			Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_COMPLETED+ " fired");
+		}else{
+			Log.d(UtteranceModule.MODULE_FULL_NAME,"event: " + EVENT_COMPLETED+ " not found");
+		}  		
+	}
 	@Override
 	public void onResult(Activity activity, int requestCode, int resultCode, Intent data){
-
+		
+		Log.d(UtteranceModule.MODULE_FULL_NAME, "onResult : onResult");
+		Log.d(UtteranceModule.MODULE_FULL_NAME, "onResult : requestCode" + requestCode);
+		
 		try{
+			//If no data returned
+			if (data==null){
+				fireNoDataRecognized(resultCode);
+				return;
+			}
+			
 			//store the returned word list as an ArrayList
 			ArrayList<String> suggestedWords = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 			int wordCount = suggestedWords.size();
@@ -127,6 +163,8 @@ public class SpeechToTextProxy extends KrollProxy implements TiActivityResultHan
 			if (hasListeners(EVENT_COMPLETED)) {
 				HashMap<String, Object> event = new HashMap<String, Object>();
 				event.put("success",true);
+				event.put("detectedInput",(wordCount>0));
+				event.put("requestCode",requestCode);
 				event.put("wordCount",wordCount);
 				event.put("words",results);
 				fireEvent(EVENT_COMPLETED, event);
@@ -136,6 +174,7 @@ public class SpeechToTextProxy extends KrollProxy implements TiActivityResultHan
 			}  			
 		}catch(Exception error){
 			Log.e(UtteranceModule.MODULE_FULL_NAME, error.getMessage());
+			fireRecognizerError(requestCode,error.getMessage());
 			error.printStackTrace();
 		}
 	}
