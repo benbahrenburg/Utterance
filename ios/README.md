@@ -51,8 +51,8 @@ The Speech proxy provides Text to Speech capabilities using the device's native 
 
 To learn more about Text to Speech please read the documentation:
 
-* [Android]()
-* [iOS]()
+* [Android](https://github.com/benbahrenburg/Utterance/tree/master/android/documentation/tts.md)
+* [iOS](https://github.com/benbahrenburg/Utterance/tree/master/ios/documentation/tts.md)
 
 
 <h2>Speech To Text</h2>
@@ -61,9 +61,9 @@ Supported Platforms :  Android
 
 The SpeechToText proxy provides Speech to Text capabilities using the device's native platform speech recognizer.
 
-To learn more about Text to Speech please read the documentation:
+To learn more about Speech to Text please read the documentation:
 
-* [Android]()
+* [Android](https://github.com/benbahrenburg/Utterance/tree/master/android/documentation/stt.md)
 
 
 <h2>Learn More</h2>
