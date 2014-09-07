@@ -11,6 +11,8 @@ import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.titanium.TiApplication;
 
+import android.os.Build;
+
 @Kroll.module(name="Utterance", id="bencoding.utterance")
 public class UtteranceModule extends KrollModule
 {
@@ -31,10 +33,10 @@ public class UtteranceModule extends KrollModule
 		//Log.d(TAG, "inside onAppCreate");
 		// put module init code that needs to run when the application is created
 	}
-
+	
 	@Kroll.getProperty @Kroll.method
 	public Boolean isSupported(){
-		return true;
-	}
+		return (Build.VERSION.SDK_INT > 18);
+	}	
 }
 
