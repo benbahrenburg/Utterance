@@ -138,6 +138,13 @@ public class SpeechProxy extends KrollProxy implements TiLifecycle.OnLifecycleEv
     }
 	
 	@Kroll.method
+	public boolean isLanguageAvailable(String language)
+	{
+		int check =_tts.isLanguageAvailable(toLocale(language));
+		return ((check!= TextToSpeech.LANG_MISSING_DATA) && (check!=TextToSpeech.LANG_NOT_SUPPORTED));
+	}
+	
+	@Kroll.method
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void startSpeaking(HashMap hm){
 		KrollDict args = new KrollDict(hm);
@@ -154,7 +161,11 @@ public class SpeechProxy extends KrollProxy implements TiLifecycle.OnLifecycleEv
 				_voice = args.getString("voice");
 			}
 			if(_voice!="auto"){
-				_tts.setLanguage(toLocale(_voice));	
+				if(isLanguageAvailable(_voice)){
+					_tts.setLanguage(toLocale(_voice));	
+				}else{
+					Log.e(_logName,"Unsupported Language provided.");					
+				}				
 			}			
 		}
 				
