@@ -52,25 +52,42 @@ public class SpeechProxy extends KrollProxy implements TiLifecycle.OnLifecycleEv
 	
 	@Override
 	public void onInit(int status) {
-        if (status == TextToSpeech.LANG_MISSING_DATA
-                || status == TextToSpeech.LANG_NOT_SUPPORTED) {
-            Log.e(_logName, "This Language is not supported");
+		try{
+			if(_tts == null){
+				_tts = new TextToSpeech(TiApplication.getInstance().getApplicationContext(),this);
+			}
+			
+	        if (status == TextToSpeech.LANG_MISSING_DATA
+	                || status == TextToSpeech.LANG_NOT_SUPPORTED) {
+	            Log.e(_logName, "This Language is not supported");
+	    		if (hasListeners("completed")) {
+	    			HashMap<String, Object> event = new HashMap<String, Object>();
+	    			event.put("success",false);
+	    			event.put("message","This Language is not supported");
+	    			event.put("text",_text);
+	    			event.put("voice",_voice);
+	    			
+	    			fireEvent("completed", event);
+	    		}				                
+	        }
+	            
+	    	if(status == TextToSpeech.SUCCESS) {
+	    		//Log.d(_logName, "Adding OnUtteranceCompletedListener");  
+	    		_tts.setOnUtteranceCompletedListener(this);
+	    		_voice = _tts.getLanguage().toString();			    		
+	    	}			
+		}catch(Exception error){
     		if (hasListeners("completed")) {
     			HashMap<String, Object> event = new HashMap<String, Object>();
     			event.put("success",false);
-    			event.put("message","This Language is not supported");
+    			event.put("message","General Err: " + error.getMessage());
     			event.put("text",_text);
-    			event.put("voice",_voice);
-    			
+    			event.put("voice",_voice);    			
     			fireEvent("completed", event);
-    		}				                
-        }
-            
-    	if(status == TextToSpeech.SUCCESS) {
-    		//Log.d(_logName, "Adding OnUtteranceCompletedListener");  
-    		_tts.setOnUtteranceCompletedListener(this);
-    		_voice = _tts.getLanguage().toString();			    		
-    	}		
+    		}				
+			Log.e(UtteranceModule.MODULE_FULL_NAME, error.getMessage());
+			error.printStackTrace();
+		}		
 	}
 	
 
