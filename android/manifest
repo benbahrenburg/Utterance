@@ -2,8 +2,9 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 0.4
+version: 0.5
 apiversion: 2
+architectures: armeabi armeabi-v7a x86
 description: Android Text to Speech and Speech to Text for Titanium Mobile
 author: Benjamin Bahrenburg
 license: Apache 2.0
@@ -15,4 +16,4 @@ name: utterance
 moduleid: bencoding.utterance
 guid: 9e866641-584f-4790-b3a0-4a85ff81e25b
 platform: android
-minsdk: 3.2.1.GA
+minsdk: 3.5.0.GA
