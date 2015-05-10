@@ -22,22 +22,19 @@ int const cSpeechBoundaryWord = 1;
     if(NSClassFromString(@"AVSpeechSynthesizer"))
     {
         _isSupported=YES;
+        self.speechSynthesizer = [AVSpeechSynthesizer new];
+        self.speechSynthesizer.delegate = self;
     }
     
 	[super _configure];
 }
 
--(void) clean
+-(void)_destroy
 {
     if(self.speechSynthesizer!=nil){
         self.speechSynthesizer.delegate = nil;
         self.speechSynthesizer = nil;
     }
-}
--(void)_destroy
-{
-    [self rememberSelf];
-    [self clean];
     _text = nil;
     _voice = nil;
     
@@ -170,15 +167,9 @@ int const cSpeechBoundaryWord = 1;
         utterance.postUtteranceDelay = [[NSNumber numberWithFloat:postUtteranceDelay] doubleValue];
     }
     
-    [self clean];
-    self.speechSynthesizer = [AVSpeechSynthesizer new];
-    self.speechSynthesizer.delegate = self;
-
-    
     [self.speechSynthesizer speakUtterance:utterance];
 
     _isSpeaking = YES;
-    [self rememberSelf];
 }
 
 -(void)continueSpeaking:(id)unused
@@ -224,7 +215,6 @@ int const cSpeechBoundaryWord = 1;
     }
     [self doCallListener:@"stopped"];
     _isSpeaking = NO;
-    [self forgetSelf];
 }
 
 -(id)isSpeaking
@@ -248,7 +238,6 @@ int const cSpeechBoundaryWord = 1;
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didCancelSpeechUtterance:(AVSpeechUtterance *)utterance{
     _isSpeaking = NO;
     [self doCallListener:@"canceled"];
-    [self forgetSelf];
 }
 
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didContinueSpeechUtterance:(AVSpeechUtterance *)utterance{
@@ -259,7 +248,6 @@ int const cSpeechBoundaryWord = 1;
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance{
     _isSpeaking = NO;
     [self doCallListener:@"completed"];
-    [self forgetSelf];
 }
 
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didPauseSpeechUtterance:(AVSpeechUtterance *)utterance{

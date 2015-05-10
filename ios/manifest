@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 0.4
+version: 0.5.beta
 apiversion: 2
 architectures: armv7 arm64 i386 x86_64
 description: Titanium module for Apple's native Speech Synthesizer
@@ -16,4 +16,4 @@ name: utterance
 moduleid: bencoding.utterance
 guid: 3ffcde48-e965-4c88-8dc6-2c7150da60fb
 platform: iphone
-minsdk: 3.5.0.GA
+minsdk: 3.5.1.GA
